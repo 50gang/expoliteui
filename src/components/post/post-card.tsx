@@ -29,6 +29,7 @@ import { useAppDispatch } from "@/libs/redux/hook";
 import { set } from "react-hook-form";
 import { setPost } from "@/libs/redux/post/postSlice";
 import { formatTime } from "@/libs/utils/day";
+import VideoPreview from "./video-preview";
 
 interface IPostCardProps {
   post: IPost;
@@ -102,17 +103,28 @@ export default function PostCard({ post, onUpdate, onDelete }: IPostCardProps) {
             </IconButton>
           }
           title={post.authorName}
-            subheader={formatTime(post.createdAt)}
+          subheader={formatTime(post.createdAt)}
         />
         <CardContent sx={{ backgroundColor: post.backgroundColor }}>
           <Typography variant="body1">{post.content}</Typography>
         </CardContent>
 
-        {post.mediaFiles.length > 0 && (
+        {post.mediaFiles.some((m) => m.resource_type === "image") && (
           <ImagePreview
-            imagesPreview={post.mediaFiles.map((file) => file.url)}
+            imagesPreview={post.mediaFiles
+              .filter((m) => m.resource_type === "image")
+              .map((m) => m.url)}
           />
         )}
+
+        {post.mediaFiles.some((m) => m.resource_type === "video") && (
+          <VideoPreview
+            videosPreview={post.mediaFiles
+              .filter((m) => m.resource_type === "video")
+              .map((m) => m.url)}
+          />
+        )}
+
         <CardActions
           disableSpacing
           sx={{

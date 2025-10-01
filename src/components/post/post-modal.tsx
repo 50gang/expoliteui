@@ -145,7 +145,7 @@ const randomBgColors = getRandomBgColors(15); // e.g. 10 random colors
 
   const [mediaFiles, setMediaFiles] = useState<IMediaFiles[]>([]);
 
-  const createPostMutation = UseCreatePost({ files: imageFiles, handleClose });
+  const createPostMutation = UseCreatePost({ files: [...imageFiles, ...videoFiles], handleClose });
   const updatePostMutation = UseUpdatePost({
     id: initialValue?._id ?? "",
     mediaFiles,
