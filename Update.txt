@@ -8,4 +8,6 @@ Here are some extra features which I would actually love to be included to the U
 
 4. I want the post to actually have a different page that when a user clicks any post it will redirect to the post page with more details about the post like comments, reactions counts and others
 
-5. Then more about the post, you did not update the reaction count issue,  and please can you update the video so that it can be displaying the full uploaded content with the original size? ( Or rather that is why I said I wanted to add an extra page where they can view the original complete height and width of the image and video uploaded )
+5. Then more about the post, you did not update the reaction count issue,  and please can you update the video so that it can be displaying the full uploaded content with the original size? 
+( Or rather that is why I said I wanted to add an extra page where they can view the original complete height and width of the image and video uploaded )
+
