@@ -1,0 +1,2 @@
+1. Here are some extra features which I would actually love to be included to the UI like a sticky footer to make it look like a real social media app.
+And please can you update my search bar to actually return a list of available users or related content if they search for any?
