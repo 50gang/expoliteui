@@ -1,0 +1,24 @@
+Here are some extra features which I would actually love to be included to the UI
+
+1. Please add a sticky footer to the bottom-page to make it look like a real social media app.
+ 
+2. And please can you update my search bar to actually return a list of available users or related content if they search for any?
+
+3. I already added the profile picture and profile name,  but if a user uploads a picture or set a profile name, 
+they do get uploaded but they don't update on the user's profile page. Please can you also fix that issue?
+
+4. I want the post of each user's to also be available in the user's  profile 
+
+5. I want the post to actually have a different page that when a user clicks any post it will redirect to the post page with more details about the post like comments, reactions counts and others
+
+6. Then more about the post, you did not update the reaction count issue,  and please can you update the video so that it can be displaying the full uploaded content with the original size? 
+( Or rather that is why I said I wanted to add an extra page where they can view the original complete height and width of the image and video uploaded )
+
+7. There's a little problem with the update post, instead of the changes to be added to the post that was updated. i don't know why it is crreating a new post. 
+Please help fix that too
+
+8. I don't want the user's email's to be publicly visible like this at their profile. 
+So please replace where the email is being displayed with the users profile name
+
+9. The notification button is currently not working, kindly work on that also to make it function accurately, 
+if any user receives a new friend request, or there was an update on the user's  post. let him be notified 
