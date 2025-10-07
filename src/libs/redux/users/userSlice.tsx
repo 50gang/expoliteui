@@ -1,12 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from '../store'
-import { initialUserState } from '../../utils/initialUserState.utils';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import type { RootState } from '../store';
 import { Iuser } from '../../../../global';
 
 interface ISetUserPayload {
-  user: Iuser;                // ✅ singular
+  user: Iuser;
   accessToken: string;
-};
+}
 
 interface IUpdateUserPayload {
   name?: string;
@@ -15,15 +14,48 @@ interface IUpdateUserPayload {
   bio?: string;
 }
 
-// Define a type for the slice state
 export interface UserState {
   data: Iuser;
   accessToken: string;
   isAuthenticated: boolean;
 }
 
-// Define the initial state using that type
-const initialState: UserState = initialUserState()
+// Check if running in browser
+const isClient = typeof window !== 'undefined';
+
+const getInitialStateFromLocalStorage = (): UserState => {
+  if (isClient) {
+    const userFromLocalStorage = localStorage.getItem('user');
+    const isAuthenticated = localStorage.getItem('isAuthenticated');
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (userFromLocalStorage && isAuthenticated === 'true' && accessToken) {
+      return {
+        data: JSON.parse(userFromLocalStorage),
+        accessToken,
+        isAuthenticated: true,
+      };
+    }
+  }
+
+  // Return default state if not in client or no user data in localStorage
+  return {
+    data: {
+      _id: '',
+      name: '',
+      email: '',
+      role: 'user',
+      avatarUrl: null,
+      coverPhotoUrl: null,
+      bio: undefined,
+      isActive: false,
+    },
+    accessToken: '',
+    isAuthenticated: false,
+  };
+};
+
+const initialState: UserState = getInitialStateFromLocalStorage();
 
 export const userSlice = createSlice({
   name: 'user',
@@ -34,27 +66,32 @@ export const userSlice = createSlice({
       state.isAuthenticated = true;
       state.accessToken = action.payload.accessToken;
 
-      // Store to localStorage
-      localStorage.setItem('user', JSON.stringify(state.data));
-      localStorage.setItem('isAuthenticated', `${state.isAuthenticated}`);
-      localStorage.setItem('accessToken', state.accessToken);
+      // Store to localStorage on the client side
+      if (isClient) {
+        localStorage.setItem('user', JSON.stringify(state.data));
+        localStorage.setItem('isAuthenticated', `${state.isAuthenticated}`);
+        localStorage.setItem('accessToken', state.accessToken);
+      }
     },
 
     updateUser: (state, action: PayloadAction<IUpdateUserPayload>) => {
       state.data = {
         ...state.data,
         ...action.payload,
-      }
+      };
 
-      localStorage.setItem('user', JSON.stringify(state.data));
+      // Store updated data to localStorage on the client side
+      if (isClient) {
+        localStorage.setItem('user', JSON.stringify(state.data));
+      }
     },
 
     resetUser: (state) => {
       state.data = {
-        _id: "",
-        name: "",
-        email: "",
-        role: "user",
+        _id: '',
+        name: '',
+        email: '',
+        role: 'user',
         avatarUrl: null,
         coverPhotoUrl: null,
         bio: undefined,
@@ -63,16 +100,18 @@ export const userSlice = createSlice({
       state.accessToken = '';
       state.isAuthenticated = false;
 
-      localStorage.removeItem('user');
-      localStorage.removeItem('isAuthenticated');
-      localStorage.removeItem('accessToken');
+      // Clear from localStorage on the client side
+      if (isClient) {
+        localStorage.removeItem('user');
+        localStorage.removeItem('isAuthenticated');
+        localStorage.removeItem('accessToken');
+      }
     },
   },
 });
 
 export const { setUser, resetUser, updateUser } = userSlice.actions;
 
-// Selector
 export const selectUser = (state: RootState) => state.user;
 
 export default userSlice.reducer;

@@ -150,7 +150,7 @@ const randomBgColors = getRandomBgColors(15); // e.g. 10 random colors
     id: initialValue?._id ?? "",
     mediaFiles,
     handleClose,
-    files: imageFiles,
+    files: [...imageFiles, ...videoFiles],
   });
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -269,14 +269,20 @@ const randomBgColors = getRandomBgColors(15); // e.g. 10 random colors
   //   }
   // };
 
-  const handleSubmit = () => {
-    const DATA_SUBMIT = {
-      content,
-      backgroundColor: selectedBgColor,
-    };
-
-    createPostMutation.mutate(DATA_SUBMIT);
+const handleSubmit = () => {
+  const DATA_SUBMIT = {
+    content,
+    backgroundColor: selectedBgColor,
+    mediaFiles,
   };
+
+  if (initialValue) {
+    updatePostMutation.mutate(DATA_SUBMIT);
+  } else {
+    createPostMutation.mutate(DATA_SUBMIT);
+  }
+};
+
 
   // useEffect(() => {
   //   if (initialValue) {
